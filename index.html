@@ -1,1193 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ibrahim Abdulqadir · Cybersecurity Engineer & Web Developer</title>
-  <meta name="description" content="Cybersecurity engineer, web developer, and portfolio website builder. Network Security, IDS/IPS , Python." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #080c0a;
-      --bg-card: #0c1210;
-      --bg-hover: #101810;
-      --border: #1c3d28;
-      --border-soft: #152e1e;
-      --green: #3dff7a;
-      --green-dim: #28b356;
-      --green-muted: #1a6b3a;
-      --text: #d4ffe4;
-      --text-muted: #5a8b6a;
-      --text-dim: #2e6040;
-      --yellow: #ffe066;
-      --blue: #66ccff;
-      --red: #ff6b6b;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'JetBrains Mono', monospace;
-      line-height: 1.6;
-      cursor: default;
-    }
-
-    /* scanline overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 255, 100, 0.012) 2px,
-        rgba(0, 255, 100, 0.012) 4px
-      );
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 48px;
-      background: rgba(8, 12, 10, 0.97);
-      border-bottom: 1px solid var(--border-soft);
-      backdrop-filter: blur(8px);
-    }
-
-    .nav-brand {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--green);
-      letter-spacing: 0.04em;
-    }
-
-    .nav-brand span { color: var(--text-dim); }
-
-    .nav-links {
-      display: flex;
-      gap: 36px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--green); }
-
-    .nav-status {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      color: var(--text-dim);
-      letter-spacing: 0.08em;
-    }
-
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-    @keyframes blink { 50% { opacity: 0; } }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-12px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    /* ─── HERO ─── */
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      padding: 96px 48px 80px;
-      border-bottom: 1px solid var(--border-soft);
-      animation: fadeUp 0.7s ease both;
-    }
-
-    .hero-left { display: flex; flex-direction: column; justify-content: center; gap: 20px; }
-
-    .hero-eyebrow {
-      font-size: 11px;
-      color: var(--green);
-      letter-spacing: 0.2em;
-      border: 1px solid var(--border);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 14px;
-      border-radius: 2px;
-      width: fit-content;
-    }
-
-    .hero-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 56px;
-      font-weight: 800;
-      color: #eafff2;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-    }
-
-    .hero-name em {
-      font-style: normal;
-      color: var(--green);
-    }
-
-    .hero-role {
-      font-size: 12px;
-      color: var(--green-dim);
-      letter-spacing: 0.06em;
-    }
-
-    .hero-bio {
-      font-family: 'Syne', sans-serif;
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text-muted);
-      line-height: 1.85;
-      max-width: 440px;
-    }
-
-    .hero-ctas {
-      display: flex;
-      gap: 12px;
-      margin-top: 8px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 11px 22px;
-      border-radius: 3px;
-      cursor: pointer;
-      letter-spacing: 0.05em;
-      transition: all 0.2s;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .btn-primary {
-      background: var(--green);
-      color: #060908;
-      border: 1px solid var(--green);
-    }
-
-    .btn-primary:hover { background: #5affa0; border-color: #5affa0; }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-    }
-
-    .btn-ghost:hover { color: var(--green); border-color: var(--green-muted); }
-
-    /* terminal */
-    .terminal {
-      background: #050908;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      font-size: 12.5px;
-      animation: fadeUp 0.7s 0.15s ease both;
-    }
-
-    .term-bar {
-      background: #0a110d;
-      border-bottom: 1px solid var(--border-soft);
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .dot { width: 11px; height: 11px; border-radius: 50%; }
-    .dot-r { background: #3a1515; }
-    .dot-y { background: #3a361a; }
-    .dot-g { background: #1a3a22; }
-
-    .term-title {
-      font-size: 11px;
-      color: var(--text-dim);
-      margin: 0 auto;
-    }
-
-    .term-body {
-      padding: 24px;
-      line-height: 2;
-    }
-
-    .t-prompt { color: var(--text-dim); }
-    .t-cmd { color: var(--green); }
-    .t-str { color: #ffe066; }
-    .t-key { color: #66ccff; }
-    .t-val { color: var(--green); }
-    .t-bool { color: #ff9f66; }
-    .t-muted { color: var(--text-muted); }
-    .t-dim { color: var(--text-dim); }
-
-    .cursor {
-      display: inline-block;
-      width: 8px;
-      height: 15px;
-      background: var(--green);
-      animation: blink 1s step-end infinite;
-      vertical-align: middle;
-      margin-left: 2px;
-    }
-
-    /* ─── SECTIONS ─── */
-    section {
-      padding: 72px 48px;
-      border-bottom: 1px solid var(--border-soft);
-    }
-
-    .sec-label {
-      font-size: 10px;
-      color: var(--green);
-      letter-spacing: 0.25em;
-      margin-bottom: 40px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .sec-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border-soft);
-      max-width: 240px;
-    }
-
-    /* ─── ABOUT ─── */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 3fr 1fr;
-      gap: 48px;
-      align-items: start;
-    }
-
-    .about-text {
-      font-family: 'Syne', sans-serif;
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.95;
-    }
-
-    .about-text p + p { margin-top: 18px; }
-
-    .about-text strong { color: var(--text); font-weight: 600; }
-
-    .stat-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      background: var(--border-soft);
-      border: 1px solid var(--border-soft);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .stat-block {
-      background: var(--bg-card);
-      padding: 18px 22px;
-    }
-
-    .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--green);
-      line-height: 1;
-    }
-
-    .stat-lbl {
-      font-size: 10px;
-      color: var(--text-dim);
-      letter-spacing: 0.1em;
-      margin-top: 4px;
-    }
-
-    /* ─── SKILLS ─── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1px;
-      background: var(--border-soft);
-      border: 1px solid var(--border-soft);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .skill-cell {
-      background: var(--bg-card);
-      padding: 22px;
-    }
-
-    .skill-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .skill-name { font-size: 12px; color: var(--text); font-weight: 500; }
-
-    .skill-pct { font-size: 11px; color: var(--text-dim); }
-
-    .bar-track {
-      height: 2px;
-      background: var(--border);
-      border-radius: 1px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      background: var(--green);
-      border-radius: 1px;
-    }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-top: 10px;
-    }
-
-    .stag {
-      font-size: 9px;
-      color: var(--text-dim);
-      background: var(--border-soft);
-      border: 1px solid var(--border);
-      padding: 2px 7px;
-      border-radius: 2px;
-      letter-spacing: 0.05em;
-    }
-
-    /* ─── PROJECTS ─── */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1px;
-      background: var(--border-soft);
-      border: 1px solid var(--border-soft);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .proj-card {
-      background: var(--bg-card);
-      padding: 28px;
-      cursor: pointer;
-      transition: background 0.18s;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .proj-card:hover { background: var(--bg-hover); }
-
-    .proj-badge {
-      position: absolute;
-      top: 18px;
-      right: 18px;
-      font-size: 9px;
-      letter-spacing: 0.12em;
-      padding: 3px 9px;
-      border-radius: 2px;
-    }
-
-    .badge-live { background: #0d2b18; color: var(--green); border: 1px solid var(--border); }
-    .badge-wip { background: #2b2400; color: var(--yellow); border: 1px solid #3d3400; }
-
-    .proj-type {
-      font-size: 10px;
-      color: var(--green-dim);
-      letter-spacing: 0.18em;
-      margin-bottom: 14px;
-    }
-
-    .proj-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: #eafff2;
-      margin-bottom: 10px;
-      line-height: 1.2;
-    }
-
-    .proj-desc {
-      font-family: 'Syne', sans-serif;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.75;
-      flex: 1;
-      margin-bottom: 18px;
-    }
-
-    .proj-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 18px;
-    }
-
-    .ptag {
-      font-size: 10px;
-      color: var(--green);
-      background: #0c2018;
-      border: 1px solid var(--border);
-      padding: 3px 9px;
-      border-radius: 2px;
-    }
-
-    .proj-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      color: var(--text-dim);
-      border-top: 1px solid var(--border-soft);
-      padding-top: 14px;
-      transition: color 0.2s;
-    }
-
-    .proj-card:hover .proj-footer { color: var(--green); }
-
-    /* ─── MODAL ─── */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(4, 8, 6, 0.92);
-      z-index: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 24px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s;
-      backdrop-filter: blur(4px);
-    }
-
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .modal {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      width: 100%;
-      max-width: 680px;
-      max-height: 85vh;
-      overflow-y: auto;
-      transform: translateY(16px);
-      transition: transform 0.25s;
-    }
-
-    .modal-overlay.open .modal { transform: translateY(0); }
-
-    .modal-header {
-      padding: 24px 28px;
-      border-bottom: 1px solid var(--border-soft);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-    }
-
-    .modal-close {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      padding: 6px 12px;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: all 0.15s;
-      flex-shrink: 0;
-    }
-
-    .modal-close:hover { color: var(--green); border-color: var(--green-muted); }
-
-    .modal-body { padding: 28px; }
-
-    .modal-section { margin-bottom: 28px; }
-
-    .modal-section-title {
-      font-size: 10px;
-      color: var(--green);
-      letter-spacing: 0.2em;
-      margin-bottom: 12px;
-    }
-
-    .modal-text {
-      font-family: 'Syne', sans-serif;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.85;
-    }
-
-    .modal-text li { margin-left: 16px; margin-top: 6px; }
-
-    .tech-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tech-chip {
-      font-size: 11px;
-      color: var(--green);
-      background: #0c2018;
-      border: 1px solid var(--border);
-      padding: 5px 12px;
-      border-radius: 3px;
-    }
-
-    .link-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .modal-link {
-      font-size: 12px;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      padding: 10px 18px;
-      border-radius: 3px;
-      text-decoration: none;
-      transition: all 0.18s;
-      letter-spacing: 0.05em;
-    }
-
-    .modal-link:hover { color: var(--green); border-color: var(--green-muted); }
-
-    /* ─── CONTACT ─── */
-    .contact-intro {
-      font-family: 'Syne', sans-serif;
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-bottom: 28px;
-      max-width: 500px;
-      line-height: 1.8;
-    }
-
-    .contact-links { display: flex; gap: 12px; flex-wrap: wrap; }
-
-    .clink {
-      font-size: 12px;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      padding: 12px 22px;
-      border-radius: 3px;
-      text-decoration: none;
-      letter-spacing: 0.06em;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: all 0.2s;
-    }
-
-    .clink:hover { color: var(--green); border-color: var(--green-muted); }
-
-    .clink-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2.5s ease-in-out infinite;
-    }
-
-    /* ─── FOOTER ─── */
-    footer {
-      padding: 24px 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      color: var(--text-dim);
-      letter-spacing: 0.05em;
-    }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      nav { padding: 14px 20px; }
-      .nav-status, .nav-links li:nth-child(n+3) { display: none; }
-      .hero { grid-template-columns: 1fr; gap: 40px; padding: 56px 20px 48px; }
-      .hero-name { font-size: 40px; }
-      section { padding: 48px 20px; }
-      .about-grid { grid-template-columns: 1fr; }
-      footer { padding: 20px; flex-direction: column; gap: 8px; text-align: center; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ibrahim Abdulqadir — Security Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/devicon/2.15.1/devicon.min.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- ─── NAV ─── -->
+<header>
+  <div class="logo">ibrahim</div>
+  <button class="menu-btn" id="openDrawer"><i class="fa-solid fa-bars"></i></button>
+</header>
+
+<div class="drawer-overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <button class="drawer-close" id="closeDrawer"><i class="fa-solid fa-xmark"></i></button>
   <nav>
-    <div class="nav-brand"><span>~/</span>ibrahim.sec</div>
-    <ul class="nav-links">
-      <li><a href="#about">about</a></li>
-      <li><a href="#services">services</a></li>
-      <li><a href="#skills">skills</a></li>
-      <li><a href="#projects">projects</a></li>
-      <li><a href="#contact">contact</a></li>
-    </ul>
-    <div class="nav-status">
-      <div class="status-dot"></div>
-      open to opportunities
-    </div>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+    <a href="#" class="resume">My Resume</a>
   </nav>
+  <hr>
+  <div class="collab-title">Let's Collaborate</div>
+  <div class="socials">
+    <a href="https://github.com/IbrahimAbdulqadir" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+    <a href="#" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i></a>
+    <a href="https://hackerone.com/himdir" target="_blank" rel="noopener"><i class="fa-solid fa-bug"></i></a>
+    <a href="mailto:your.email@example.com"><i class="fa-solid fa-envelope"></i></a>
+  </div>
+  <div class="blob"></div>
+</div>
 
-  <!-- ─── HERO ─── -->
-  <div class="hero">
-    <div class="hero-left">
-      <div class="hero-eyebrow">
-        <span style="color: var(--green-dim)">▶</span>
-        CYBERSECURITY · WEB DEV · PORTFOLIO BUILDER
-      </div>
-      <h1 class="hero-name">Ibrahim<br><em>Abdulqadir.</em></h1>
-      <div class="hero-role">Cybersecurity Engineer · Web Developer · Portfolio Website Builder</div>
-      <p class="hero-bio">
-        I build things that work and look good doing it — from network intrusion detection systems to portfolio websites that do the talking for you. If you need a digital presence that actually represents your work, I can build it.
-      </p>
-      <div class="hero-ctas">
-        <a class="btn btn-primary" href="#projects">view_projects() →</a>
-        <a class="btn btn-ghost" href="#contact">get_in_touch()</a>
-      </div>
+<!-- HOME -->
+<section id="home" class="hero">
+  <div class="greet-card">
+    <span class="wave">👋</span>
+    <span><span class="hello">Hello, I am</span><span class="name">Ibrahim</span></span>
+  </div>
+  <div class="role-pill">
+    <span class="line2">PENETRATION TESTER</span>
+    <span class="line2">AI SECURITY BUILDER</span>
+  </div>
+
+  <div class="avatar-wrap">
+    <img src="assets/images/profile.jpg" alt="Ibrahim Abdulqadir">
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+  <div class="role-card reveal">
+    <svg class="illus" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#7C86F0"/><stop offset="100%" stop-color="#4339CE"/>
+      </linearGradient></defs>
+      <rect x="30" y="30" width="140" height="140" rx="28" fill="url(#g1)"/>
+      <path d="M100 55l38 16v34c0 32-22 50-38 56-16-6-38-24-38-56V71z" fill="#fff" opacity="0.92"/>
+      <path d="M84 100l12 12 22-26" stroke="#4339CE" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <h3>Penetration Tester</h3>
+    <p>A pentester with a passion for breaking authentication flows, hunting IDORs, and turning every "secure" target into a finding.</p>
+  </div>
+
+  <div class="role-card reveal">
+    <svg class="illus" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#FF9FC0"/><stop offset="100%" stop-color="#C23A78"/>
+      </linearGradient></defs>
+      <circle cx="100" cy="100" r="80" fill="url(#g2)"/>
+      <circle cx="100" cy="100" r="26" fill="none" stroke="#fff" stroke-width="6"/>
+      <circle cx="100" cy="100" r="46" fill="none" stroke="#fff" stroke-width="4" opacity="0.7"/>
+      <circle cx="100" cy="100" r="6" fill="#fff"/>
+      <circle cx="146" cy="100" r="5" fill="#fff"/>
+      <circle cx="54" cy="100" r="5" fill="#fff"/>
+      <circle cx="100" cy="146" r="5" fill="#fff"/>
+      <circle cx="100" cy="54" r="5" fill="#fff"/>
+    </svg>
+    <h3>AI Security Builder</h3>
+    <p>I design autonomous agents that reason through recon and exploitation — like RedMind, a GPT-4o-driven pentesting agent with its own tool registry.</p>
+  </div>
+
+  <div class="role-card reveal">
+    <svg class="illus" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#7EE8C7"/><stop offset="100%" stop-color="#00A37A"/>
+      </linearGradient></defs>
+      <circle cx="85" cy="85" r="55" fill="none" stroke="url(#g3)" stroke-width="14"/>
+      <line x1="125" y1="125" x2="165" y2="165" stroke="url(#g3)" stroke-width="16" stroke-linecap="round"/>
+      <circle cx="85" cy="85" r="22" fill="#fff" opacity="0.85"/>
+    </svg>
+    <h3>Bug Bounty Hunter</h3>
+    <p>Active on HackerOne, scoping targets, building recon checklists, and chasing authentication and access-control vulnerabilities for a living.</p>
+  </div>
+
+  <div class="role-card reveal">
+    <svg class="illus" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#FFD27A"/><stop offset="100%" stop-color="#FF9F43"/>
+      </linearGradient></defs>
+      <path d="M70 50h60v30c0 28-15 46-30 50-15-4-30-22-30-50z" fill="url(#g4)"/>
+      <rect x="60" y="50" width="14" height="22" rx="7" fill="url(#g4)"/>
+      <rect x="126" y="50" width="14" height="22" rx="7" fill="url(#g4)"/>
+      <rect x="85" y="128" width="30" height="14" fill="url(#g4)"/>
+      <rect x="65" y="142" width="70" height="12" rx="6" fill="#7a4b1f"/>
+    </svg>
+    <h3>Freelance &amp; Contract Work</h3>
+    <p>From a university-portal security assessment to AI agent build briefs for clients — I bring engagements from scoping to final report.</p>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work" class="projects-section">
+  <h2 class="sec-title two-tone">My <span class="blue">Projects</span></h2>
+  <div class="filters">
+    <button class="filter-pill active" data-filter="all">All</button>
+    <button class="filter-pill" data-filter="python">Python</button>
+    <button class="filter-pill" data-filter="ai">AI / Agents</button>
+    <button class="filter-pill" data-filter="web3">Web3</button>
+  </div>
+
+  <div class="project-card show reveal" data-tags="python ai">
+    <div class="mockup">
+<span class="mline">$ redmind --scan target=juice-shop.local</span><br>
+[+] modules loaded: <span class="mok">14</span><br>
+[+] false-positive engine: <span class="mok">ACTIVE</span><br>
+[+] status: <span class="mok">scan complete</span>
     </div>
-
-    <div class="terminal">
-      <div class="term-bar">
-        <div class="dot dot-r"></div>
-        <div class="dot dot-y"></div>
-        <div class="dot dot-g"></div>
-        <div class="term-title">bash — ibrahim@sec:~</div>
-      </div>
-      <div class="term-body">
-        <div><span class="t-prompt">$</span> <span class="t-cmd">whoami</span></div>
-        <div class="t-muted" style="margin:4px 0 14px; padding-left:12px">cybersecurity_engineer</div>
-
-        <div><span class="t-prompt">$</span> <span class="t-cmd">cat</span> <span class="t-key">profile.json</span></div>
-        <div style="margin:10px 0 14px; padding-left:12px; border-left:1px solid var(--border-soft); line-height:2.1">
-          <div class="t-dim">{</div>
-          <div style="padding-left:16px">
-            <span class="t-key">"name"</span><span class="t-dim">:</span> <span class="t-str">"Ibrahim Abdulqadir"</span><span class="t-dim">,</span>
-          </div>
-          <div style="padding-left:16px">
-            <span class="t-key">"degree"</span><span class="t-dim">:</span> <span class="t-str">"B.Sc. Cybersecurity"</span><span class="t-dim">,</span>
-          </div>
-          <div style="padding-left:16px">
-            <span class="t-key">"certification"</span><span class="t-dim">:</span> <span class="t-str">"CISSP"</span><span class="t-dim">,</span>
-          </div>
-          <div style="padding-left:16px">
-            <span class="t-key">"roles"</span><span class="t-dim">:</span> <span class="t-str">["Cybersecurity Eng", "Web Dev", "Portfolio Builder"]</span><span class="t-dim">,</span>
-          </div>
-          <div style="padding-left:16px">
-            <span class="t-key">"location"</span><span class="t-dim">:</span> <span class="t-str">"Nigeria"</span><span class="t-dim">,</span>
-          </div>
-          <div style="padding-left:16px">
-            <span class="t-key">"open_to_work"</span><span class="t-dim">:</span> <span class="t-bool">true</span>
-          </div>
-          <div class="t-dim">}</div>
-        </div>
-
-        <div><span class="t-prompt">$</span> <span class="cursor"></span></div>
-      </div>
+    <h3>RedMind</h3>
+    <p>An autonomous AI-powered penetration testing agent with a 14-module tool registry and a false-positive detection engine that fingerprints servers via canary requests — tested against OWASP Juice Shop and live targets.</p>
+    <div class="stack-line"><b>Stack/Tools:</b> Python, GPT-4o, Flask, Security Automation</div>
+    <div class="link-row">
+      <a href="https://github.com/IbrahimAbdulqadir/REDMIND" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a href="https://github.com/IbrahimAbdulqadir/REDMIND" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
     </div>
   </div>
 
-  <!-- ─── ABOUT ─── -->
-  <section id="about">
-    <div class="sec-label">// 01 &nbsp; ABOUT</div>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>
-          I'm a Cybersecurity graduate from <strong>Bayero University Kano</strong> with a strong foundation in network security, intrusion detection systems, and host hardening. My final year project involved implementing a <strong>production-grade Snort-based NIDS</strong> that detects and classifies real-world attack patterns across a monitored network.
-        </p>
-        <p>
-          On the web side, I design and build <strong>portfolio websites</strong> for professionals who need their digital presence to do the talking — freelancers, content creators, web3 builders, social media managers, virtual assistants, and anyone who needs a clean, modern site that showcases their work, brands they've worked with, and the value they bring.
-        </p>
-        <p>
-          I've also served as <strong>Head of Campus Operations</strong> at Unigram, a campus micro-economy platform for Nigerian university students — which means I understand both the technical and business side of building products people actually use.
-        </p>
-        <p>
-          Currently open to freelance web projects, security roles, and postgraduate opportunities in cybersecurity (Erasmus Mundus, MEXT, GKS).
-        </p>
-      </div>
-      <div class="stat-stack">
-        <div class="stat-block">
-          <div class="stat-num">B.Sc.</div>
-          <div class="stat-lbl">CYBERSECURITY · BUK</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-num">2025</div>
-          <div class="stat-lbl">GRADUATION YEAR</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-num">4+</div>
-          <div class="stat-lbl">SECURITY PROJECTS</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-num">Certification</div>
-          <div class="stat-lbl">CISSP/OPSEC</div>
-        </div>
-      </div>
+  <div class="project-card show reveal" data-tags="web3 python">
+    <div class="mockup">
+<span class="mline">$ web3shield --audit 0x4f...e2a1</span><br>
+[+] proxy detection: <span class="mok">found</span><br>
+[+] slither scan: <span class="mok">3 findings</span>
     </div>
-  </section>
-
-  <!-- ─── SERVICES ─── -->
-  <section id="services">
-    <div class="sec-label">// 02 &nbsp; WHAT I BUILD</div>
-    <div class="projects-grid">
-
-      <div class="proj-card" style="cursor:default;">
-        <div class="proj-type">PORTFOLIO WEBSITES</div>
-        <div class="proj-title">Your Work, Online.</div>
-        <div class="proj-desc">
-          Custom portfolio sites for freelancers, content creators, web3 builders, virtual assistants, social media managers, and brands. Clean, fast, mobile-friendly — built to represent you properly.
-        </div>
-        <div class="proj-tags">
-          <span class="ptag">Freelancers</span>
-          <span class="ptag">Content Creators</span>
-          <span class="ptag">Web3</span>
-          <span class="ptag">VA / SMM</span>
-          <span class="ptag">Brands</span>
-        </div>
-        <div class="proj-footer" style="color: var(--green-dim);">
-          <span>Custom designed per client</span>
-          <span>→ get_quote()</span>
-        </div>
-      </div>
-
-      <div class="proj-card" style="cursor:default;">
-        <div class="proj-type">WEB DEVELOPMENT</div>
-        <div class="proj-title">Landing Pages & Sites.</div>
-        <div class="proj-desc">
-          Landing pages, personal sites, and simple web apps. Whether you're finding clients, showcasing brands you've worked with, or looking for contract work — your site should close deals before you even speak.
-        </div>
-        <div class="proj-tags">
-          <span class="ptag">HTML/CSS/JS</span>
-          <span class="ptag">React</span>
-          <span class="ptag">GitHub Pages</span>
-          <span class="ptag">Responsive</span>
-        </div>
-        <div class="proj-footer" style="color: var(--green-dim);">
-          <span>Fast delivery · Clean code</span>
-          <span>→ get_quote()</span>
-        </div>
-      </div>
-
-      <div class="proj-card" style="cursor:default;">
-        <div class="proj-type">CYBERSECURITY</div>
-        <div class="proj-title">Security Tooling & Consulting.</div>
-        <div class="proj-desc">
-          Network monitoring, intrusion detection, security audits, and custom Python security scripts. For individuals or small teams who need practical security — not enterprise complexity.
-        </div>
-        <div class="proj-tags">
-          <span class="ptag">NIDS</span>
-          <span class="ptag">Python</span>
-          <span class="ptag">Snort</span>
-          <span class="ptag">Network Audit</span>
-        </div>
-        <div class="proj-footer" style="color: var(--green-dim);">
-          <span>Practical · Documented</span>
-          <span>→ get_quote()</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ─── SKILLS ─── -->
-  <section id="skills">
-    <div class="sec-label">// 03 &nbsp; TECHNICAL SKILLS</div>
-    <div class="skills-grid">
-      <div class="skill-cell">
-        <div class="skill-header">
-          <span class="skill-name">Snort / IDS Rules</span>
-          <span class="skill-pct">85%</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
-        <div class="skill-tags"><span class="stag">rule authoring</span><span class="stag">alert analysis</span></div>
-      </div>
-      <div class="skill-cell">
-        <div class="skill-header">
-          <span class="skill-name">Python</span>
-          <span class="skill-pct">85%</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
-        <div class="skill-tags"><span class="stag">scripting</span><span class="stag">automation</span><span class="stag">parsing</span></div>
-      </div>
-      <div class="skill-cell">
-        <div class="skill-header">
-          <span class="skill-name">Network Analysis</span>
-          <span class="skill-pct">80%</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
-        <div class="skill-tags"><span class="stag">Wireshark</span><span class="stag">tcpdump</span></div>
-      </div>
-      <div class="skill-cell">
-        <div class="skill-header">
-          <span class="skill-name">Linux / Bash</span>
-          <span class="skill-pct">88%</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill" style="width:88%"></div></div>
-        <div class="skill-tags"><span class="stag">sysadmin</span><span class="stag">shell scripting</span></div>
-      </div>
-      <div class="skill-cell">
-        <div class="skill-header">
-          <span class="skill-name">TCP/IP Networking</span>
-          <span class="skill-pct">86%</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill" style="width:86%"></div></div>
-        <div class="skill-tags"><span class="stag">protocols</span><span class="stag">subnetting</span></div>
-      </div>
-      <div class="skill-cell">
-        <div class="skill-header">
-          <span class="skill-name">Web Security (OWASP)</span>
-          <span class="skill-pct">85%</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
-        <div class="skill-tags"><span class="stag">XSS</span><span class="stag">SQLi</span><span class="stag">CSRF</span></div>
-      </div>
-      <div class="skill-cell">
-        <div class="skill-header">
-          <span class="skill-name">Scapy / Packet Crafting</span>
-          <span class="skill-pct">70%</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
-        <div class="skill-tags"><span class="stag">packet forge</span><span class="stag">traffic gen</span></div>
-      </div>
-      <div class="skill-cell">
-        <div class="skill-header">
-          <span class="skill-name">Git / GitHub</span>
-          <span class="skill-pct">80%</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
-        <div class="skill-tags"><span class="stag">version control</span><span class="stag">GitHub Pages</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── PROJECTS ─── -->
-  <section id="projects">
-    <div class="sec-label">// 04 &nbsp; PROJECTS</div>
-    <div class="projects-grid">
-
-      <div class="proj-card" onclick="openModal('nids')">
-        <div class="proj-badge badge-live">LIVE</div>
-        <div class="proj-type">NETWORK SECURITY</div>
-        <div class="proj-title">Snort-Based NIDS</div>
-        <div class="proj-desc">
-          Real-time network intrusion detection system using Snort with custom rule sets. Monitors traffic, classifies threat categories, and generates structured alert reports.
-        </div>
-        <div class="proj-tags">
-          <span class="ptag">Snort</span>
-          <span class="ptag">Python</span>
-          <span class="ptag">Linux</span>
-          <span class="ptag">TCP/IP</span>
-        </div>
-        <div class="proj-footer">
-          <span>FYP · Bayero University Kano</span>
-          <span>→ view details</span>
-        </div>
-      </div>
-
-      <div class="proj-card" onclick="openModal('dashboard')">
-        <div class="proj-badge badge-wip">DEVELOPED</div>
-        <div class="proj-type">NETWORK SECURITY</div>
-        <div class="proj-title">NIDS Alert Dashboard</div>
-        <div class="proj-desc">
-          Web dashboard that visualizes Snort alert data in real time — attack types, top attacker IPs, frequency trends, and threat classification charts.
-        </div>
-        <div class="proj-tags">
-          <span class="ptag">Flask</span>
-          <span class="ptag">Chart.js</span>
-          <span class="ptag">SQLite</span>
-          <span class="ptag">Snort</span>
-        </div>
-        <div class="proj-footer">
-          <span>Extension of NIDS FYP</span>
-          <span>→ view details</span>
-        </div>
-      </div>
-
-      <div class="proj-card" onclick="openModal('fim')">
-        <div class="proj-badge badge-wip">IN PROGRESS</div>
-        <div class="proj-type">HOST SECURITY</div>
-        <div class="proj-title">File Integrity Monitor</div>
-        <div class="proj-desc">
-          A background daemon that hashes and watches critical system files, immediately alerting when unauthorized modifications are detected. Lightweight Tripwire alternative.
-        </div>
-        <div class="proj-tags">
-          <span class="ptag">Python</span>
-          <span class="ptag">SHA-256</span>
-          <span class="ptag">Linux</span>
-          <span class="ptag">systemd</span>
-        </div>
-        <div class="proj-footer">
-          <span>Host Security</span>
-          <span>→ view details</span>
-        </div>
-      </div>
-
-      <div class="proj-card" onclick="openModal('pktanalyzer')">
-        <div class="proj-badge badge-wip">PLANNED</div>
-        <div class="proj-type">NETWORK SECURITY</div>
-        <div class="proj-title">Network Packet Analyzer</div>
-        <div class="proj-desc">
-          Python CLI tool using Scapy to capture and analyze live network traffic. Detects port scans, ARP spoofing, unusual connection patterns, and exports structured reports.
-        </div>
-        <div class="proj-tags">
-          <span class="ptag">Scapy</span>
-          <span class="ptag">Python</span>
-          <span class="ptag">ARP</span>
-          <span class="ptag">Port Scan Detection</span>
-        </div>
-        <div class="proj-footer">
-          <span>Network Tooling</span>
-          <span>→ view details</span>
-        </div>
-      </div>
-
-      <div class="proj-card" onclick="openModal('portfolio')">
-        <div class="proj-badge badge-live">LIVE</div>
-        <div class="proj-type">WEB DEVELOPMENT</div>
-        <div class="proj-title">This Portfolio Site</div>
-        <div class="proj-desc">
-          Designed and built this personal portfolio from scratch — dark terminal aesthetic, project detail modals, responsive layout, and deployed on GitHub Pages.
-        </div>
-        <div class="proj-tags">
-          <span class="ptag">HTML</span>
-          <span class="ptag">CSS</span>
-          <span class="ptag">JavaScript</span>
-          <span class="ptag">GitHub Pages</span>
-        </div>
-        <div class="proj-footer">
-          <span>ibrahimabdulqadir.github.io</span>
-          <span>→ view details</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ─── CONTACT ─── -->
-  <section id="contact">
-    <div class="sec-label">// 05 &nbsp; CONTACT</div>
-    <p class="contact-intro">
-      Need a portfolio site built? Looking for security help? Open to freelance web projects, contract work, and security roles. Let's talk.
-    </p>
-    <div class="contact-links">
-      <a class="clink" href="https://github.com/Ibrahim.github.io" target="_blank" rel="noopener">
-        <div class="clink-dot"></div>
-        github.com/Ibrahim.github.io
-      </a>
-      <a class="clink" href="https://www.linkedin.com/in/ibrahim-abdulqadir-2046a4246/" target="_blank" rel="noopener">
-        linkedin.com/in/IbrahimAbdulqadir
-      </a>
-      <a class="clink" href="mailto:makanaladi@gmail.com">
-        makanaladi@gmail.com
-      </a>
-    </div>
-  </section>
-
-  <footer>
-    <span>ibrahim abdulqadir · cybersecurity & web dev · abuja, ng</span>
-    <span>built with &lt;terminal&gt; vibes</span>
-  </footer>
-
-  <!-- ─── MODAL ─── -->
-  <div class="modal-overlay" id="modal-overlay" onclick="closeModalOnOverlay(event)">
-    <div class="modal" id="modal-box">
-      <div class="modal-header">
-        <div>
-          <div id="modal-type" class="proj-type" style="margin-bottom:6px"></div>
-          <div id="modal-title" class="proj-title" style="font-size:22px; position:static"></div>
-        </div>
-        <button class="modal-close" onclick="closeModal()">✕ close</button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-section">
-          <div class="modal-section-title">// OVERVIEW</div>
-          <div id="modal-overview" class="modal-text"></div>
-        </div>
-        <div class="modal-section">
-          <div class="modal-section-title">// KEY FEATURES</div>
-          <ul id="modal-features" class="modal-text"></ul>
-        </div>
-        <div class="modal-section">
-          <div class="modal-section-title">// TECH STACK</div>
-          <div id="modal-stack" class="tech-row"></div>
-        </div>
-        <div class="modal-section">
-          <div class="modal-section-title">// LINKS</div>
-          <div id="modal-links" class="link-row"></div>
-        </div>
-      </div>
+    <h3>Web3Shield</h3>
+    <p>An autonomous smart contract pentester — an Etherscan-based crawler with proxy detection, paired with a Slither-driven access-control auditor.</p>
+    <div class="stack-line"><b>Stack/Tools:</b> Solidity, Slither, Python, web3.py</div>
+    <div class="link-row">
+      <a href="https://github.com/IbrahimAbdulqadir" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a href="https://github.com/IbrahimAbdulqadir" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
     </div>
   </div>
 
-  <script>
-    const projects = {
-      nids: {
-        type: 'NETWORK SECURITY',
-        title: 'Snort-Based Network Intrusion Detection System',
-        overview: 'A production-grade NIDS implemented as a final year project at Bayero University Kano. The system uses Snort as its detection engine with a curated ruleset covering common attack categories including port scans, DoS attempts, and protocol anomalies. Alert data is parsed and analyzed with Python scripts, with results visualized in structured reports.',
-        features: [
-          'Custom Snort rules for 8+ attack categories',
-          'Python parser for Snort unified2 alert output',
-          'Statistical analysis of alert frequency and attacker IPs',
-          'IPv4 and IPv6 traffic monitoring (including link-local filtering)',
-          'Automated report generation with attack classification tables',
-          'Tested against real network traffic captures'
-        ],
-        stack: ['Snort 2.9', 'Python 3', 'Ubuntu Linux', 'Wireshark', 'Bash', 'TCP/IP'],
-        links: [
-          { label: '→ GitHub Repo', href: 'https://github.com/YOUR_USERNAME/snort-nids' },
-          { label: '→ Read Report (PDF)', href: '#' }
-        ]
-      },
-      dashboard: {
-        type: 'NETWORK SECURITY',
-        title: 'NIDS Alert Dashboard',
-        overview: 'A real-time web dashboard that ingests Snort alert output and presents it through interactive visualizations. Designed as a direct extension of the NIDS FYP — turning raw alert data into actionable intelligence for a SOC operator or network admin.',
-        features: [
-          'Real-time alert ingestion from Snort log files',
-          'Attack type breakdown chart (DoS, Scan, Exploit, etc.)',
-          'Top attacker IPs ranked by alert frequency',
-          'Time-series alert volume chart',
-          'Alert detail view with packet metadata',
-          'SQLite storage for historical analysis'
-        ],
-        stack: ['Python', 'Flask', 'Chart.js', 'SQLite', 'HTML/CSS', 'Snort'],
-        links: [
-          { label: '→ GitHub Repo (planned)', href: '#' }
-        ]
-      },
-      fim: {
-        type: 'HOST SECURITY',
-        title: 'File Integrity Monitor',
-        overview: 'A lightweight Linux daemon that watches critical system files and directories for unauthorized modifications. Inspired by enterprise tools like Tripwire and AIDE, but designed to be minimal, understandable, and easy to deploy on any Linux system without complex configuration.',
-        features: [
-          'SHA-256 baseline hashing of specified file paths',
-          'Configurable watch list via JSON config file',
-          'Daemon mode via systemd service unit',
-          'Alert on file create, modify, delete, or permission change',
-          'Log output with timestamp, path, and change type',
-          'Email/webhook notification support (planned)'
-        ],
-        stack: ['Python 3', 'hashlib', 'systemd', 'Linux', 'JSON config', 'inotify'],
-        links: [
-          { label: '→ GitHub Repo (planned)', href: '#' }
-        ]
-      },
-      portfolio: {
-        type: 'WEB DEVELOPMENT',
-        title: 'Personal Portfolio Website',
-        overview: 'Designed and built a full personal portfolio website from scratch with a dark terminal aesthetic. The site showcases cybersecurity projects, skills, services, and contact info — with interactive project detail modals, smooth scroll navigation, and a scanline overlay for the terminal feel. Deployed on GitHub Pages for free hosting.',
-        features: [
-          'Dark terminal aesthetic with scanline overlay and blinking cursor',
-          'Sticky nav with smooth anchor scroll',
-          'Clickable project cards with full detail modals (Escape to close)',
-          'Skills grid with animated progress bars',
-          'Services section for freelance offering',
-          'Fully responsive — works on mobile and desktop',
-          'Zero dependencies — pure HTML, CSS, and JavaScript'
-        ],
-        stack: ['HTML5', 'CSS3', 'Vanilla JavaScript', 'Google Fonts', 'GitHub Pages'],
-        links: [
-          { label: '→ Live Site', href: 'https://ibrahimabdulqadir.github.io' },
-          { label: '→ GitHub Repo', href: 'https://github.com/IbrahimAbdulqadir/IbrahimAbdulqadir.github.io' }
-        ]
-      },
-        type: 'NETWORK SECURITY',
-        title: 'Network Packet Analyzer',
-        overview: 'A command-line Python tool built on Scapy for live network traffic analysis. Goes beyond basic capture by implementing detection logic for common attack signatures — port scanning patterns, ARP cache poisoning attempts, and unusual TCP flag combinations. Outputs structured JSON or human-readable reports.',
-        features: [
-          'Live packet capture on any network interface',
-          'SYN scan and stealth scan detection',
-          'ARP spoofing / poisoning detection',
-          'Unusual TCP flag combination detection',
-          'Top talkers and most-targeted ports summary',
-          'Export to JSON or formatted text report'
-        ],
-        stack: ['Python 3', 'Scapy', 'argparse', 'JSON', 'Linux', 'Wireshark'],
-        links: [
-          { label: '→ GitHub Repo (planned)', href: '#' }
-        ]
-      }
-    };
+  <div class="project-card show reveal" data-tags="python ai">
+    <div class="mockup">
+<span class="mline">$ phishdec --classify url</span><br>
+[+] model: <span class="mok">RandomForest (391k domains)</span><br>
+[+] verdict: <span class="mok">phishing — 0.97</span>
+    </div>
+    <h3>AI PhishDec</h3>
+    <p>A phishing detection system built on a Random Forest classifier trained on ~391K real phishing domains, with a Flask dashboard for live classification.</p>
+    <div class="stack-line"><b>Stack/Tools:</b> Python, scikit-learn, Flask</div>
+    <div class="link-row">
+      <a href="https://github.com/IbrahimAbdulqadir" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a href="https://github.com/IbrahimAbdulqadir" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+    </div>
+  </div>
 
-    function openModal(key) {
-      const p = projects[key];
-      document.getElementById('modal-type').textContent = p.type;
-      document.getElementById('modal-title').textContent = p.title;
-      document.getElementById('modal-overview').textContent = p.overview;
+  <div class="project-card show reveal" data-tags="python">
+    <div class="mockup">
+<span class="mline">$ netrecon --target 10.0.0.0/24</span><br>
+[+] nmap sweep: <span class="mok">complete</span><br>
+[+] CVE lookups via NVD: <span class="mok">matched 12</span>
+    </div>
+    <h3>NetRecon Pro</h3>
+    <p>An automated network vulnerability scanner integrating Nmap with the NIST NVD API for CVE intelligence, with auto-generated PDF reports.</p>
+    <div class="stack-line"><b>Stack/Tools:</b> Python, Nmap, NVD API, ReportLab</div>
+    <div class="link-row">
+      <a href="https://github.com/IbrahimAbdulqadir" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a href="https://github.com/IbrahimAbdulqadir" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+    </div>
+  </div>
 
-      const featEl = document.getElementById('modal-features');
-      featEl.innerHTML = p.features.map(f => `<li>${f}</li>`).join('');
+  <div class="project-card show reveal" data-tags="python">
+    <div class="mockup">
+<span class="mline">$ idorhunter --auth session.json --target api.target.com</span><br>
+[+] endpoints mapped: <span class="mok">214</span><br>
+[+] object-id swaps tested: <span class="mok">142</span><br>
+[+] confirmed IDOR: <span class="mok">3 findings</span>
+    </div>
+    <h3>IDOR Hunter</h3>
+    <p>A purpose-built, authenticated IDOR hunting tool — it logs into a target with real session credentials, maps endpoints that reference object IDs, then systematically swaps those IDs across privilege levels to surface broken access control. Built after concluding that a focused authenticated scanner beats a broad one for actual bounty payouts.</p>
+    <div class="stack-line"><b>Stack/Tools:</b> Python, Session Authentication, Recon Checklists</div>
+    <div class="link-row">
+      <a href="https://github.com/IbrahimAbdulqadir" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <a href="https://github.com/IbrahimAbdulqadir" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+    </div>
+  </div>
+</section>
 
-      const stackEl = document.getElementById('modal-stack');
-      stackEl.innerHTML = p.stack.map(s => `<span class="tech-chip">${s}</span>`).join('');
+<!-- SKILLS -->
+<section id="skills" class="skills-section">
+  <h2 class="sec-title two-tone">My <span class="blue">Skills</span></h2>
+  <div class="skills-grid reveal">
+    <div class="skill-item"><i class="fa-solid fa-user-secret" style="color:#4339CE"></i><span>Pentesting</span></div>
+    <div class="skill-item"><i class="fa-solid fa-bug" style="color:#C23A78"></i><span>Bug Bounty</span></div>
+    <div class="skill-item"><i class="devicon-python-plain colored"></i><span>Python</span></div>
+    <div class="skill-item"><i class="devicon-linux-plain"></i><span>Linux / Kali</span></div>
+    <div class="skill-item"><i class="fa-solid fa-brain" style="color:#FF9F43"></i><span>AI Agents</span></div>
+    <div class="skill-item"><i class="devicon-flask-original"></i><span>Flask</span></div>
+    <div class="skill-item"><i class="fa-solid fa-network-wired" style="color:#00A37A"></i><span>Nmap</span></div>
+    <div class="skill-item"><i class="devicon-solidity-plain colored"></i><span>Solidity</span></div>
+    <div class="skill-item"><i class="devicon-javascript-plain colored"></i><span>JavaScript</span></div>
+    <div class="skill-item"><i class="devicon-nextjs-plain"></i><span>Next.js</span></div>
+    <div class="skill-item"><i class="devicon-github-original"></i><span>Git / GitHub</span></div>
+    <div class="skill-item"><i class="fa-solid fa-shield-halved" style="color:#4339CE"></i><span>Reporting</span></div>
+  </div>
+</section>
 
-      const linksEl = document.getElementById('modal-links');
-      linksEl.innerHTML = p.links.map(l =>
-        `<a class="modal-link" href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`
-      ).join('');
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <h2 class="sec-title two-tone">Get In <span class="blue">Touch!</span></h2>
+  <div class="contact-inner">
+    <div class="info-card pink reveal">
+      <div class="ic"><i class="fa-solid fa-envelope"></i></div>
+      <span>your.email@example.com</span>
+    </div>
+    <div class="info-card blue reveal">
+      <div class="ic"><i class="fa-brands fa-github"></i></div>
+      <span>github.com/IbrahimAbdulqadir</span>
+    </div>
+    <form id="contactForm" class="reveal">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit" class="send-btn">Send Message</button>
+    </form>
+  </div>
+</section>
 
-      document.getElementById('modal-overlay').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
+<footer>© 2026 Ibrahim Abdulqadir. Built with intent.</footer>
 
-    function closeModal() {
-      document.getElementById('modal-overlay').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    function closeModalOnOverlay(e) {
-      if (e.target === document.getElementById('modal-overlay')) closeModal();
-    }
-
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-  </script>
+<script src="js/script.js"></script>
 
 </body>
 </html>
