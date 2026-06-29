@@ -1,4 +1,30 @@
-// drawer
+// dark mode
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = themeToggle.querySelector('i');
+  const root = document.documentElement;
+
+  function applyTheme(theme){
+    if(theme === 'dark'){
+      root.setAttribute('data-theme','dark');
+      themeIcon.className = 'fa-solid fa-sun';
+    } else {
+      root.removeAttribute('data-theme');
+      themeIcon.className = 'fa-solid fa-moon';
+    }
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+
+  themeToggle.addEventListener('click', ()=>{
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('theme', next);
+  });
+
+  // drawer
   const drawer = document.getElementById('drawer');
   const overlay = document.getElementById('overlay');
   document.getElementById('openDrawer').onclick = ()=>{drawer.classList.add('open');overlay.classList.add('open');};
@@ -27,12 +53,4 @@
         c.classList.toggle('show', f==='all' || tags.includes(f));
       });
     });
-  });
-
-  // contact form -> mailto fallback
-  document.getElementById('contactForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const [name, email, msg] = this.querySelectorAll('input,textarea');
-    const body = encodeURIComponent(`From: ${name.value} (${email.value})\n\n${msg.value}`);
-    window.location.href = `mailto:your.email@example.com?subject=Portfolio contact from ${encodeURIComponent(name.value)}&body=${body}`;
   });

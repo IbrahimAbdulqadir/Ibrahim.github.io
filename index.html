@@ -14,7 +14,10 @@
 
 <header>
   <div class="logo">ibrahim</div>
-  <button class="menu-btn" id="openDrawer"><i class="fa-solid fa-bars"></i></button>
+  <div class="header-right">
+    <button class="theme-toggle" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+    <button class="menu-btn" id="openDrawer"><i class="fa-solid fa-bars"></i></button>
+  </div>
 </header>
 
 <div class="drawer-overlay" id="overlay"></div>
@@ -32,9 +35,9 @@
   <div class="collab-title">Let's Collaborate</div>
   <div class="socials">
     <a href="https://github.com/IbrahimAbdulqadir" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
-    <a href="#" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i></a>
+    <a href="https://linkedin.com/in/ibrahim-abdulqadir" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i></a>
     <a href="https://hackerone.com/himdir" target="_blank" rel="noopener"><i class="fa-solid fa-bug"></i></a>
-    <a href="mailto:your.email@example.com"><i class="fa-solid fa-envelope"></i></a>
+    <a href="mailto:ibrahimabdulqadir46@gmail.com"><i class="fa-solid fa-envelope"></i></a>
   </div>
   <div class="blob"></div>
 </div>
@@ -230,16 +233,16 @@
   <div class="contact-inner">
     <div class="info-card pink reveal">
       <div class="ic"><i class="fa-solid fa-envelope"></i></div>
-      <span>your.email@example.com</span>
+      <span>ibrahimabdulqadir46@gmail.com</span>
     </div>
     <div class="info-card blue reveal">
       <div class="ic"><i class="fa-brands fa-github"></i></div>
       <span>github.com/IbrahimAbdulqadir</span>
     </div>
-    <form id="contactForm" class="reveal">
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <textarea placeholder="Your Message" required></textarea>
+    <form id="contactForm" class="reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
       <button type="submit" class="send-btn">Send Message</button>
     </form>
   </div>
